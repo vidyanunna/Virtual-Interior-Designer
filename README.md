@@ -15,4 +15,7 @@ This project is optimized to run on systems with GPU support due to the computat
 2. Install dependencies: `pip install -r requirements.txt` (or) Follow "Copy of Virtual Interior Designer with GAN" File
 4. Run: `python app.py`
 
+## Screenshots
+![Homepage of Virtual Interior Designer](images/Index_Page.jpeg)
+
 
