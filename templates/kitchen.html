@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen Design</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="page2-background">
+        <!-- Dark Overlay for Dull Effect -->
+        <div class="page2-overlay"></div>
+
+        <!-- Light Border at the Top -->
+        <div class="page2-border"></div>
+
+        <!-- Title and Back Arrow -->
+        <div class="page2-header">
+            <i class="fas fa-arrow-left back-arrow" onclick="goBack()"></i>
+            <h1 class="page2-title">VIRTUAL INTERIOR DESIGN</h1>
+        </div>
+
+        <!-- Main content -->
+        <div class="page2-container">
+            <h2 class="page2-heading">Kitchen Design</h2>
+
+            <!-- Upload Section -->
+            <div class="upload-section">
+                <form id="transform-form" enctype="multipart/form-data">
+                    <input type="file" id="file-input" name="image" accept="image/*" style="display: none;" onchange="showUploadStatus()">
+                    <button type="button" class="upload-button" onclick="document.getElementById('file-input').click()">
+                        <i class="fas fa-upload"></i> Upload Room Image
+                    </button>
+                </form>
+                <p id="upload-status" style="margin-top: 10px; color: #666;"></p>
+            </div>
+
+            <!-- Style Dropdown -->
+            <div class="style-dropdown">
+                <label for="style-select">Select your style:</label>
+                <select id="style-select" name="style">
+                    <option value="modern">Modern</option>
+                    <option value="minimalist">Minimalist</option>
+                    <option value="vintage">Vintage</option>
+                    <option value="rustic">Rustic</option>
+                    <option value="industrial">Industrial</option>
+                    <option value="bohemian">Bohemian</option>
+                    <option value="scandinavian">Scandinavian</option>
+                    <option value="art_deco">Art Deco</option>
+                </select>
+            </div>
+
+            <!-- Transform Button -->
+            <button id="transform-button" class="transform-button" onclick="transformRoom()">Transform</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to show upload status
+        function showUploadStatus() {
+            const fileInput = document.getElementById('file-input');
+            const status = document.getElementById('upload-status');
+            if (fileInput.files.length > 0) {
+                status.textContent = `Image uploaded: ${fileInput.files[0].name}`;
+            } else {
+                status.textContent = '';
+            }
+        }
+
+        // Function to handle the Transform button click
+        async function transformRoom() {
+            const fileInput = document.getElementById('file-input');
+            const styleSelect = document.getElementById('style-select');
+            const transformButton = document.getElementById('transform-button');
+
+            if (fileInput.files.length === 0) {
+                alert("Please upload an image first!");
+                return;
+            }
+
+            // Show transforming message on button and disable it
+            const originalText = transformButton.textContent;
+            transformButton.textContent = 'Transforming...';
+            transformButton.disabled = true;
+
+            const formData = new FormData();
+            formData.append('image', fileInput.files[0]);
+            formData.append('style', styleSelect.value);
+            formData.append('room_type', 'kitchen');
+
+            try {
+                const response = await fetch('/transform', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error('Transformation failed');
+                }
+
+                const data = await response.json();
+                if (data.image_url && data.input_image_url) {
+                    // Redirect to result page
+                    window.location.href = "{{ url_for('result') }}";
+                } else {
+                    alert('Failed to transform the room. Please try again.');
+                    transformButton.textContent = originalText;
+                    transformButton.disabled = false;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to transform the room. Please try again.');
+                transformButton.textContent = originalText;
+                transformButton.disabled = false;
+            }
+        }
+
+        // Function to go back to the previous page
+        function goBack() {
+            window.location.href = "{{ url_for('page2') }}";
+        }
+    </script>
+</body>
+</html>

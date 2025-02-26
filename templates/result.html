@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result - Virtual Interior Design</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .image-box {
+            width: 45%;
+            text-align: center;
+            background-color: white; /* White background behind images */
+            padding: 15px; /* Padding for the white box */
+            border-radius: 10px; /* Rounded corners for the white box */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+        .image-box img {
+            max-width: 100%;
+            max-height: 400px; /* Reduced size */
+            border-radius: 10px;
+        }
+        .button-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .button-container button {
+            margin: 0 10px; /* Adds 10px space on the left and right of each button */
+        }
+    </style>
+</head>
+<body>
+    <div class="page2-background">
+        <!-- Dark Overlay for Dull Effect -->
+        <div class="page2-overlay"></div>
+
+        <!-- Light Border at the Top -->
+        <div class="page2-border"></div>
+
+        <!-- Title and Back Arrow -->
+        <div class="page2-header">
+            <i class="fas fa-arrow-left back-arrow" onclick="goBack()"></i>
+            <h1 class="page2-title">VIRTUAL INTERIOR DESIGN</h1>
+        </div>
+
+        <!-- Main content -->
+        <div class="page2-container">
+            <div class="image-container">
+                <div class="image-box">
+                    <h3>Input Image</h3>
+                    <img src="{{ input_image_url }}" alt="Input Image">
+                </div>
+                <div class="image-box">
+                    <h3>Transformed Image</h3>
+                    <img id="output-image" src="{{ output_image_url }}" alt="Transformed Image">
+                </div>
+            </div>
+            <div class="button-container">
+                <button id="change-design-btn" class="transform-button" onclick="changeDesign()">Change Design</button>
+                <a href="{{ output_image_url }}" download="transformed_image.png">
+                    <button class="transform-button" onclick="downloadImage()">Download</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to go back to the previous page
+        function goBack() {
+            window.location.href = "{{ url_for('page2') }}";
+        }
+
+        // Function to re-transform the design
+        async function changeDesign() {
+            const button = document.getElementById('change-design-btn');
+            button.innerHTML = 'Loading...';
+            button.disabled = true;
+
+            const formData = new FormData();
+            formData.append('style', '{{ style }}');
+            formData.append('room_type', '{{ room_type }}');
+
+            try {
+                const response = await fetch('/retransform', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error('Re-transformation failed');
+                }
+
+                const data = await response.json();
+                if (data.image_url) {
+                    document.getElementById('output-image').src = data.image_url;
+                } else {
+                    alert('Failed to re-transform the room. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to re-transform the room. Please try again.');
+            } finally {
+                button.innerHTML = 'Change Design';
+                button.disabled = false;
+            }
+        }
+
+        // Function to handle download and redirect
+        function downloadImage() {
+            setTimeout(() => {
+                window.location.href = "{{ url_for('thank_you') }}";
+            }, 500); // Redirect after a short delay to ensure download starts
+        }
+    </script>
+</body>
+</html>

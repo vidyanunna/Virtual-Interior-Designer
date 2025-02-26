@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Virtual Interior Design</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Pastel Elegant Background */
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e8d8f5, #f9e4d4); /* Lavender to Peach */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: pastelGlow 8s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes pastelGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Container Styling */
+        .thank-you-container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.95); /* Slightly more opaque for contrast */
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Softer shadow */
+            max-width: 600px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header Styling */
+        .page2-header {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+        }
+        .page2-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: #4a3c6b; /* Deep lavender for elegance */
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Heading Styling */
+        .page2-heading {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            color: #e67e9b; /* Soft pastel pink */
+            margin-bottom: 20px;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateX(-20px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Quote Styling */
+        .thank-you-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: #7b6e9a; /* Muted lavender */
+            line-height: 1.5;
+            margin: 0 0 30px;
+            font-style: italic;
+            animation: fadeInText 1.2s ease-in-out;
+        }
+
+        @keyframes fadeInText {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Button Styling */
+        .transform-button {
+            padding: 12px 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(90deg, #d7a7e1, #f4c2b5); /* Pastel purple to peach */
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(215, 167, 225, 0.4);
+        }
+
+        .transform-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(215, 167, 225, 0.6);
+            background: linear-gradient(90deg, #f4c2b5, #d7a7e1); /* Reverse gradient on hover */
+        }
+
+        /* Remove Overlay and Border */
+        .page2-overlay, .page2-border {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Title -->
+    <div class="page2-header">
+        <h1 class="page2-title">VIRTUAL INTERIOR DESIGN</h1>
+    </div>
+
+    <!-- Main content -->
+    <div class="thank-you-container">
+        <h2 class="page2-heading">Thank You!</h2>
+        <p class="thank-you-quote">"Thank you for using Virtual Interior Design! We hope your space becomes a reflection of your dreams."</p>
+        <button class="transform-button" onclick="window.location.href='{{ url_for('index') }}'">Back to Home</button>
+    </div>
+</body>
+</html>
