@@ -17,5 +17,16 @@ This project is optimized to run on systems with GPU support due to the computat
 
 ## Screenshots
 ![Homepage of Virtual Interior Designer](images/Index_Page.jpeg)
+![All Rooms of Virtual Interior Designer](images/Home_Page.jpeg)
+
+![Living Room Upload Page of Virtual Interior Designer](images/Upload_Page.jpeg)
+
+![Uploading Page of Virtual Interior Designer](images/Uploading_Page.jpeg)
+
+![Transformed Page of Virtual Interior Designer](images/Transformed_Page.jpeg)
+
+![Thank You Page of Virtual Interior Designer](images/Thankyou_Page.jpeg)
+
+
 
 
