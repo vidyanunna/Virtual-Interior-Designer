@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO)
 app = Flask(__name__)
 
 # Set your ngrok authentication token
-ngrok.set_auth_token("2tLh4GC1Oky5zpujE0UW1G917y9_5wnAfEK3Mu9dU6zdP899t")
+ngrok.set_auth_token("REPLACE WITH YOUR NGROK AUTH_TOKEN")
 
 # Load the Stable Diffusion model
 model_id = "stabilityai/stable-diffusion-2-1-base"
