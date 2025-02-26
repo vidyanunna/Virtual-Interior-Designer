@@ -1,0 +1,6 @@
+uploads/*
+static/output.png
+static/input.png
+__pycache__/
+*.pyc
+venv/
